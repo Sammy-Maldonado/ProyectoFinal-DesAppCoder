@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList } from 'react-native'
 import CategoryItem from '../components/CategoryItem'
 import { colors } from '../global/colors'
 import categories from "../data/categories.json";
-//import Counter from '../components/Counter';
+import Counter from '../components/Counter';
 
 const Home = ({ navigation, route }) => {
   return (

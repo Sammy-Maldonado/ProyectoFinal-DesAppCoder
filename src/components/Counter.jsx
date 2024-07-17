@@ -4,7 +4,7 @@ import { colors } from "../global/colors";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { decrement, increment, incrementByAmount, reset } from "../fetures/Counter/CounterSlice";
+import { decrement, increment, incrementByAmount, reset } from "../features/Counter/CounterSlice";
 
 
 const Counter = () => {
