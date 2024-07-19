@@ -1,15 +1,20 @@
-import React from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
-import CategoryItem from '../components/CategoryItem'
-import { colors } from '../global/colors'
+import React from "react";
+import { StyleSheet, View, FlatList } from "react-native";
+import CategoryItem from "../components/CategoryItem";
+import { colors } from "../global/colors";
 import categories from "../data/categories.json";
-import Counter from '../components/Counter';
+import { useGetCategoriesQuery } from "../services/shopServices";
+
+//import Counter from "../components/Counter";
 
 const Home = ({ navigation, route }) => {
+  const {data: categories} = useGetCategoriesQuery()
+  //console.log(categories)
   return (
     <View style={styles.flatListContainer}>
-      <Counter />
+{/*       <Counter /> */}
       <FlatList
+        showsVerticalScrollIndicator={false}
         keyExtractor={(category) => category}
         data={categories}
         renderItem={({ item }) => (
@@ -18,9 +23,9 @@ const Home = ({ navigation, route }) => {
       />
     </View>
   );
-}
+};
 
-export default Home
+export default Home;
 
 const styles = StyleSheet.create({
   flatListContainer: {

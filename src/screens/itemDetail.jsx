@@ -9,18 +9,16 @@ import {
   useWindowDimensions,
 } from "react-native";
 
+//import allProducts from "../data/products.json";
+import { useGetProductByIdQuery } from "../services/shopServices";
 
-import allProducts from "../data/products.json";
-
-const ItemDetail = ({ route, navigation}) => {
-  
-  const {width, height} = useWindowDimensions()  
+const ItemDetail = ({ route, navigation }) => {
+  const { width, height } = useWindowDimensions();
   const [orientation, setOrientation] = useState("portrait");
-  
-  const [product, setProduct] = useState(null);
+//  const [product, setProduct] = useState(null);
+  const { productoId: idSelected } = route.params;
 
-  const {productoId: idSelected} = route.params
-
+  const {data: product, error, isLoading} = useGetProductByIdQuery(idSelected);
 
   console.log("width: " + width);
   console.log("heigth: " + height);
@@ -28,41 +26,47 @@ const ItemDetail = ({ route, navigation}) => {
   // Landscape: Horisontal
   // Portraint: Vertical
 
-  useEffect(()=>{
-    if(width > height) setOrientation("landscape")
-    else setOrientation('portrait')
-  }, [width, height])
-
   useEffect(() => {
+    if (width > height) setOrientation("landscape");
+    else setOrientation("portrait");
+  }, [width, height]);
+
+/*   useEffect(() => {
     //Encontrar el producto por su id
     const productSelected = allProducts.find(
       (product) => product.id === idSelected
     );
 
     setProduct(productSelected);
-  }, [idSelected]);
+  }, [idSelected]); */
 
   console.log(product);
 
   return (
     <View>
-    <Button onPress={()=> navigation.goBack()} title="Back" />
+      <Button onPress={() => navigation.goBack()} title="Back" />
       {product ? (
-        <View style={
-          orientation === 'portrait' ? 
-          styles.mainContainer
-          : styles.mainContainerLandscape
-        }>
+        <View
+          style={
+            orientation === "portrait"
+              ? styles.mainContainer
+              : styles.mainContainerLandscape
+          }
+        >
           <Image
             source={{ uri: product.images[0] }}
-            style={orientation === 'portrait' ? 
-            styles.image
-            : styles.imageLandscape }
+            style={
+              orientation === "portrait" ? styles.image : styles.imageLandscape
+            }
             resizeMode="cover"
           />
-          <View style={orientation === 'portrait' ? 
-          styles.textContainer
-          : styles.textContainerLandscape}>
+          <View
+            style={
+              orientation === "portrait"
+                ? styles.textContainer
+                : styles.textContainerLandscape
+            }
+          >
             <Text>{product.title}</Text>
             <Text>{product.description}</Text>
             <Text style={styles.price}>${product.price}</Text>
@@ -104,12 +108,12 @@ const styles = StyleSheet.create({
   },
   textContainerLandscape: {
     width: "50%",
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "start",
     gap: 10,
   },
   price: {
-    textAlign: "right"
-  }
+    textAlign: "right",
+  },
 });

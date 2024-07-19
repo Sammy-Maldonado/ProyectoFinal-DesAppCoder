@@ -3,8 +3,10 @@ import { useFonts } from "expo-font";
 import { colors } from "./src/global/colors";
 
 import Navigator from "./src/navigation/Navigator";
+
 import { Provider } from "react-redux";
 import store from "./src/store";
+
 
 export default function App() {
 
@@ -17,13 +19,11 @@ export default function App() {
   }
 
   return (
-
     <SafeAreaView style={styles.container}>
       <Provider store={store}>
         <Navigator />
       </Provider>
     </SafeAreaView>
-
   );
 }
 

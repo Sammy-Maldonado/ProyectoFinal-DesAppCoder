@@ -3,19 +3,19 @@ import React from "react";
 import Card from "./Card";
 import { colors } from "../global/colors";
 
-import { useDispatch } from "react-redux"
-import { setItemSelected } from "../features/Shop/ShopSlice"
+import { useDispatch } from "react-redux";
+import { setItemSelected } from "../features/Shop/ShopSlice";
 
 const ProductItem = ({
   product,
   navigation
 }) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const handleNavigate = () => {
     dispatch(setItemSelected(product.title))
-    navigation.navigate('ItemDetail', {productoId: product.id})
+    navigation.navigate("ItemDetail", { productoId: product.id });
   }
 
   return (

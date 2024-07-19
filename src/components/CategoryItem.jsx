@@ -5,15 +5,15 @@ import Card from './Card';
 import { colors } from '../global/colors';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategorySelected, setItemSelected } from '../features/Shop/ShopSlice'
+import { setCategorySelected } from '../features/Shop/ShopSlice';
+
 
 const CategoryItem = ({ category, navigation}) => {
-
   const dispatch = useDispatch()
 
   const handleNavigate = () => {
     dispatch(setCategorySelected(category))
-    navigation.navigate('ItemListCategory', {category})
+    navigation.navigate("ItemListCategory", { category });
   }
 
   return (
