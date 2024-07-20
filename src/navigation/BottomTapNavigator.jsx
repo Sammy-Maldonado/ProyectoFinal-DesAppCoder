@@ -11,6 +11,7 @@ import Header from '../components/Header'
 import { colors } from '../global/colors'
 
 import { FontAwesome5 } from "@expo/vector-icons";
+import MyProfileStackNavigator from './MyProfileStackNavigator'
 
 const Tab = createBottomTabNavigator()
 
@@ -68,6 +69,23 @@ const BottomTapNavigator = () => {
           },
         }}
       />
+      <Tab.Screen
+        name='My Buttom Profile'
+        component={MyProfileStackNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <FontAwesome5
+                  name="user-alt"
+                  size={24}
+                  color={focused ? "black" : colors.lightGray}
+                />
+              </View>
+            );
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -75,8 +93,8 @@ const BottomTapNavigator = () => {
 export default BottomTapNavigator
 
 const styles = StyleSheet.create({
-    tabBar: {
-        backgroundColor: colors.green700,
-        height: 60
-    }
+  tabBar: {
+    backgroundColor: colors.green700,
+    height: 60
+  }
 })

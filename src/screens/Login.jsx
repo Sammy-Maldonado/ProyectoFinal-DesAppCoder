@@ -4,15 +4,33 @@ import { colors } from "../global/colors";
 
 import InputForm from "../components/InputForm";
 import SubmitButton from "../components/SubmitButton";
+import { useSignInMutation } from "../services/authService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/User/UserSlice";
 
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const dispatch = useDispatch()
 
+  const [triggerSignIn, result] = useSignInMutation() 
+
+
+  useEffect(()=> {
+    if (result.isSuccess) {
+      dispatch(
+        setUser({
+          email: result.data.email,
+          idToken: result.data.idToken,
+          localId: result.data.localId,
+        })
+      );
+    }
+  }, [result])
 
   const onSubmit = ()=> {
-    //login
+    triggerSignIn({email, password, returnSecureToken: true})
   }
 
   return (
