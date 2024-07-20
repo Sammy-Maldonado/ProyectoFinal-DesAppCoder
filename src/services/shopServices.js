@@ -2,30 +2,42 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../databases/realtimeDataBase";
 
 
-// configuración para conectar a firebase
+
 export const shopApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: baseUrl}),
+  reducerPath: "shopApi",
+  baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
     getCategories: builder.query({
-      query: () => `categories.json`
+      query: () => `categories.json`,
     }),
     getProductsByCategory: builder.query({
-      query: (category) => `products.json?orderBy="category"&equalTo="${category}"`,
+      query: (category) =>
+        `products.json?orderBy="category"&equalTo="${category}"`,
       transformResponse: (res) => {
-        const transformedResponse = Object.values(res)
+        const transformedResponse = Object.values(res);
         return transformedResponse;
-      }
+      },
     }),
     getProductById: builder.query({
-      // Los numeros no necesitan comillas dobles
       query: (productId) => `products.json?orderBy="id"&equalTo=${productId}`,
       transformResponse: (res) => {
-        const transformedResponse = Object.values(res)
-        if(transformedResponse.length) return transformedResponse[0];
-      }
-    })
-  })
-})
+        const transformedResponse = Object.values(res);
+        if (transformedResponse.length) return transformedResponse[0];
+      },
+    }),
+    postOrder: builder.mutation({
+      query: ({ ...order }) => ({
+        url: "order.json",
+        method: "POST",
+        body: order,
+      }),
+    }),
+  }),
+});
 
-// Exportación de los hooks personalizados por React Toolkit Query
-export const {useGetCategoriesQuery, useGetProductsByCategoryQuery, useGetProductByIdQuery} = shopApi
+export const {
+  useGetCategoriesQuery, 
+  useGetProductsByCategoryQuery, 
+  useGetProductByIdQuery,
+  usePostOrderMutation
+} = shopApi;

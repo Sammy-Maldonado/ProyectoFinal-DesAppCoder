@@ -9,14 +9,19 @@ import {
   useWindowDimensions,
 } from "react-native";
 
-//import allProducts from "../data/products.json";
+
 import { useGetProductByIdQuery } from "../services/shopServices";
+import { useDispatch } from "react-redux";
+import { addCartItem } from "../features/Cart/CartSlice";
+
 
 const ItemDetail = ({ route, navigation }) => {
   const { width, height } = useWindowDimensions();
   const [orientation, setOrientation] = useState("portrait");
 //  const [product, setProduct] = useState(null);
   const { productoId: idSelected } = route.params;
+
+  const dispatch = useDispatch()
 
   const {data: product, error, isLoading} = useGetProductByIdQuery(idSelected);
 
@@ -25,22 +30,16 @@ const ItemDetail = ({ route, navigation }) => {
 
   // Landscape: Horisontal
   // Portraint: Vertical
-
   useEffect(() => {
     if (width > height) setOrientation("landscape");
     else setOrientation("portrait");
   }, [width, height]);
 
-/*   useEffect(() => {
-    //Encontrar el producto por su id
-    const productSelected = allProducts.find(
-      (product) => product.id === idSelected
-    );
-
-    setProduct(productSelected);
-  }, [idSelected]); */
-
-  console.log(product);
+const handleAddCart = () => {
+  // agregar al carrito
+  dispatch(addCartItem)
+  dispatch(addCartItem({...product, quantity: 1}))
+}
 
   return (
     <View>
@@ -70,7 +69,7 @@ const ItemDetail = ({ route, navigation }) => {
             <Text>{product.title}</Text>
             <Text>{product.description}</Text>
             <Text style={styles.price}>${product.price}</Text>
-            <Button title="Add cart"></Button>
+            <Button title="Add cart" onPress={handleAddCart}></Button>
           </View>
         </View>
       ) : null}

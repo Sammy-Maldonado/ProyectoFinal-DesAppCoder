@@ -9,7 +9,7 @@ import { useGetCategoriesQuery } from "../services/shopServices";
 
 const Home = ({ navigation, route }) => {
   const {data: categories} = useGetCategoriesQuery()
-  //console.log(categories)
+  //console.log(data)
   return (
     <View style={styles.flatListContainer}>
 {/*       <Counter /> */}
