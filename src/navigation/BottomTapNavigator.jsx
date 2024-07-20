@@ -4,14 +4,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeStackNavigator from './HomeStackNavigator'
 import CartStackNavigator from './CartStackNavigator'
 import OrderStackNavigator from './OrderStackNavigator'
-/* import Cart from '../screens/Cart'
-import Order from '../screens/Order' */
-//import { Header } from 'react-native/Libraries/NewAppScreen'
+import MyProfileStackNavigator from "./MyProfileStackNavigator";
+
 import Header from '../components/Header'
 import { colors } from '../global/colors'
 
 import { FontAwesome5 } from "@expo/vector-icons";
-import MyProfileStackNavigator from './MyProfileStackNavigator'
+
 
 const Tab = createBottomTabNavigator()
 
@@ -33,7 +32,11 @@ const BottomTapNavigator = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <View>
-                <FontAwesome5 name="store" size={24} color={focused ? "black" : colors.lightGray} />
+                <FontAwesome5
+                  name="store"
+                  size={24}
+                  color={focused ? "black" : colors.lightGray}
+                />
               </View>
             );
           },
@@ -46,7 +49,11 @@ const BottomTapNavigator = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <View>
-                <FontAwesome5 name="shopping-cart" size={24} color={focused ? "black" : colors.lightGray} />
+                <FontAwesome5
+                  name="shopping-cart"
+                  size={24}
+                  color={focused ? "black" : colors.lightGray}
+                />
               </View>
             );
           },
@@ -70,7 +77,7 @@ const BottomTapNavigator = () => {
         }}
       />
       <Tab.Screen
-        name='My Buttom Profile'
+        name="My Buttom Profile"
         component={MyProfileStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => {
