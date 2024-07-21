@@ -14,7 +14,7 @@ const Cart = () => {
 
   const onConfirmOrder = () => {
     // logica de confirmacion de orden
-    triggerPostOrder({items: CartData, user: "mail@mail.com", total})
+    triggerPostOrder({items: CartData, user: "Pedrito", total})
   }
 
   return (
