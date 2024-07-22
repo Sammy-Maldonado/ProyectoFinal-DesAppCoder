@@ -8,37 +8,36 @@ import { useSignInMutation } from "../services/authService";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/User/UserSlice";
 
-//import { insertSession } from "../persistence";
-
-import { useDB } from "../hooks/useDB";
-
+import { useDB } from "../hooks/useDB"; // importo el hook
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const dispatch = useDispatch()
 
-  const [triggerSignIn, result] = useSignInMutation() 
+  const [triggerSignIn, result] = useSignInMutation()
+  
+  const { insertSession } = useDB();  // peparo el metodo
 
-  const {insertSession} = useDB()
-
-
-  useEffect(()=> {
+   useEffect(()=> {
     if (result?.data && result.isSuccess) {
-      insertSession({
+      insertSession({              // inserto la session
         email: result.data.email,
         localId: result.data.localId,
-        token: result.data.idToken
+        token: result.data.idToken,
       })
-      dispatch(
-        setUser({
-          email: result.data.email,
-          idToken: result.data.idToken,
-          localId: result.data.localId,
-        })
-      );        
+      .then((response)=>{
+        dispatch(
+          setUser({
+            email: result.data.email,
+            idToken: result.data.idToken,
+            localId: result.data.localId,
+          })
+        );
+      })
+      .catch((err)=> console.log(err))
     }
-  }, [result])
+  }, [result]) 
 
   const onSubmit = ()=> {
     triggerSignIn({email, password, returnSecureToken: true})
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    //fontFamily: "Josefin",
+    fontFamily: "Josefin",
   },
   sub: {
     fontSize: 14,

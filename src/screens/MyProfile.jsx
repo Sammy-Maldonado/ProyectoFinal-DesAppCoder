@@ -5,17 +5,15 @@ import AddButton from '../components/AddButton'
 import { useDispatch, useSelector } from "react-redux";
 import { useGetProfileimageQuery } from '../services/shopServices'
 import { clearUser } from '../features/User/UserSlice';
-//import { truncateSessionTable } from '../persistence';
-
-import { useDB } from '../hooks/useDB';
+//import { truncateSessionsTable } from "../persistence";
+import { useDB } from '../hooks/useDB'; // importar session
 
 const MyProfile = ({navigation}) => {
 
       const dispatch = useDispatch()
+      const { truncateSessionTable } = useDB() // preparo el metodo
       const {imageCamera, localId} = useSelector((state) => state.auth.value)
       const {data: imageFromBase} = useGetProfileimageQuery(localId)
-      const {truncateSessionTable} = useDB()
-      
       const launchCamera = async () => {
         navigation.navigate("Image Selector");
       };
@@ -26,16 +24,15 @@ const MyProfile = ({navigation}) => {
 
       const defaultImageRoute = "../../assets/user.png";
 
-      const signOut = () => {
-        try {
-          const response = truncateSessionTable()
-          //console.log(response)
-          dispatch(clearUser())
+      const signOut =  async () => {
+        try {         
+          const response =  await truncateSessionTable(); // borro la session
+          console.log(response); 
+          dispatch(clearUser());
         } catch (error) {
-          console.log({errorSignOutDB: error})
+          console.log({ errorSignOutDB: error });
         }
       }
-
   return (
     <View style={styles.container}>
       {imageFromBase || imageCamera ? (

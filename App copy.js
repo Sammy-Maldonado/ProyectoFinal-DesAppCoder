@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  StatusBar,
-  Platform,
-  Text,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, StatusBar, Platform, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { colors } from "./src/global/colors";
 
@@ -13,21 +6,18 @@ import Navigator from "./src/navigation/Navigator";
 
 import { Provider } from "react-redux";
 import store from "./src/store";
-import { useDB } from "./src/hooks/useDB"; // importo
-import { useEffect } from "react";
+
+
+
 export default function App() {
-  const {initDB} = useDB() // preparo el metodo
   const [fontsLoaded, fontError] = useFonts({
     Josefin: require("./assets/JosefinSans-Regular.ttf"),
   });
 
-  useEffect(()=>{
-    initDB() // creo la tabla si no existe
-  },[])
-
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,6 +27,7 @@ export default function App() {
     </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

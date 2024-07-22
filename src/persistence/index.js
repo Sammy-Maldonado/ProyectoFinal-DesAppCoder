@@ -1,68 +1,83 @@
-import * as ExpoSQLite from 'expo-sqlite'
+import * as ExpoSQLite from "expo-sqlite";
 
-const db = ExpoSQLite.openDatabase('sessions.db');
+const db = ExpoSQLite.openDatabase("sessions.db");
 
-// Crear la tabla
 export const initSQLiteDB = () => {
-    const promise = new Promise((resolve, reject)=>{
-        db.transaction((tx)=> {
-            tx.executeSql(
-              "CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL);",
-              [], // Parametros
-              (_, result) => resolve(result),
-              (_, error) => reject(error)
-            );
-        });
+  console.log("Will create table");
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //Define SQL statement. BEWARE of PARENTHESIS
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL);",
+        [], //Parameters
+        (_, result) => resolve(result), //Resolve trasaction
+        (_, error) => reject(error) //Transaction error
+      );
     });
-    console.log("retorna la promesa")
-    return promise
-}
+  });
+  console.log("will return promise");
+  return promise;
+};
 
-// Crear la session
-export const insertSession = ({email, localId, token})=>{
-    const promise = new Promise((resolve, reject) => {
-      db.transaction((tx) => {
-        tx.executeSql(
-          "INSERT INTO sessions (localId, email, token) VALUES (?,?,?)",
-          [localId, email, token], // Parametros
-          (_, result) => resolve(result),
-          (_, error) => reject(error)
-        );
-      });
+export const insertSession = ({ email, localId, token }) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //Define SQL statement. BEWARE of PARENTHESIS
+      tx.executeSql(
+        "INSERT INTO sessions (localId, email, token) VALUES (?, ?, ?);",
+        [localId, email, token], //Parameters
+        (_, result) => resolve(result), //Resolve trasaction
+        (_, error) => reject(error) //Transaction error
+      );
     });
-    console.log("Insertando registro promesa");
-    return promise;
-}
+  });
+  return promise;
+};
 
-
-// Obtener la session
 export const getSession = () => {
-    const promise = new Promise((resolve, reject) => {
-      db.transaction((tx) => {
-        tx.executeSql(
-          "SELECT * from sessions",
-          [], // Parametros
-          (_, result) => resolve(result),
-          (_, error) => reject(error)
-        );
-      });
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //Define SQL statement. BEWARE of PARENTHESIS
+      tx.executeSql(
+        "SELECT * from sessions",
+        [], //Parameters
+        (_, result) => resolve(result), //Resolve trasaction
+        (_, error) => reject(error) //Transaction error
+      );
     });
-    console.log("Obteniendo la session");
-    return promise;
-}
+  });
+  return promise;
+};
 
-// Eliminar la session
-export const truncateSessionTable = () => {
-    const promise = new Promise((resolve, reject) => {
-      db.transaction((tx) => {
-        tx.executeSql(
-          "DELETE from sessions",
-          [], // Parametros
-          (_, result) => resolve(result),
-          (_, error) => reject(error)
-        );
-      });
+export const dropSessionsTable = () => {
+  console.log("Will drop table");
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //Define SQL statement. BEWARE of PARENTHESIS
+      tx.executeSql(
+        "DROP TABLE IF EXISTS sessions",
+        (_, result) => resolve(result), //Resolve trasaction
+        (_, error) => reject(error) //Transaction error
+      );
     });
-    console.log("Borrando la session");
-    return promise;
-}
+  });
+  console.log("will return promise");
+  return promise;
+};
+
+export const truncateSessionsTable = () => {
+  console.log("Will truncate table");
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //Define SQL statement. BEWARE of PARENTHESIS
+      tx.executeSql(
+        "DELETE FROM sessions",
+        [], //Parameters
+        (_, result) => resolve(result), //Resolve trasaction
+        (_, error) => reject(error) //Transaction error
+      );
+    });
+  });
+  console.log("will return promise");
+  return promise;
+};
