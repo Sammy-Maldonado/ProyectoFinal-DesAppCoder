@@ -8,6 +8,10 @@ import { useSignInMutation } from "../services/authService";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/User/UserSlice";
 
+//import { insertSession } from "../persistence";
+
+import { useDB } from "../hooks/useDB";
+
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -16,16 +20,23 @@ const Login = ({ navigation }) => {
 
   const [triggerSignIn, result] = useSignInMutation() 
 
+  const {insertSession} = useDB()
+
 
   useEffect(()=> {
-    if (result.isSuccess) {
+    if (result?.data && result.isSuccess) {
+      insertSession({
+        email: result.data.email,
+        localId: result.data.localId,
+        token: result.data.idToken
+      })
       dispatch(
         setUser({
           email: result.data.email,
           idToken: result.data.idToken,
           localId: result.data.localId,
         })
-      );
+      );        
     }
   }, [result])
 
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontFamily: "Josefin",
+    //fontFamily: "Josefin",
   },
   sub: {
     fontSize: 14,

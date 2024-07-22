@@ -2,15 +2,20 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { colors } from '../global/colors'
 import AddButton from '../components/AddButton'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { useGetProfileimageQuery } from '../services/shopServices'
+import { clearUser } from '../features/User/UserSlice';
+//import { truncateSessionTable } from '../persistence';
 
-
+import { useDB } from '../hooks/useDB';
 
 const MyProfile = ({navigation}) => {
 
+      const dispatch = useDispatch()
       const {imageCamera, localId} = useSelector((state) => state.auth.value)
       const {data: imageFromBase} = useGetProfileimageQuery(localId)
+      const {truncateSessionTable} = useDB()
+      
       const launchCamera = async () => {
         navigation.navigate("Image Selector");
       };
@@ -20,6 +25,16 @@ const MyProfile = ({navigation}) => {
       };
 
       const defaultImageRoute = "../../assets/user.png";
+
+      const signOut = () => {
+        try {
+          const response = truncateSessionTable()
+          //console.log(response)
+          dispatch(clearUser())
+        } catch (error) {
+          console.log({errorSignOutDB: error})
+        }
+      }
 
   return (
     <View style={styles.container}>
@@ -45,7 +60,7 @@ const MyProfile = ({navigation}) => {
         }
       />
       <AddButton title="My address" onPress={launchLocation} />
-
+      <AddButton onPress={signOut} title="Sign out" />
     </View>
   );
 }

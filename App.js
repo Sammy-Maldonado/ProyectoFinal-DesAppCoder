@@ -1,5 +1,5 @@
 import { StyleSheet, View, SafeAreaView, StatusBar, Platform, Text } from "react-native";
-import { useFonts } from "expo-font";
+//import { useFonts } from "expo-font";
 import { colors } from "./src/global/colors";
 
 import Navigator from "./src/navigation/Navigator";
@@ -7,16 +7,28 @@ import Navigator from "./src/navigation/Navigator";
 import { Provider } from "react-redux";
 import store from "./src/store";
 
+//import { initSQLiteDB } from "./src/persistence"; 
+
+import { useDB } from "./src/hooks/useDB";
+import { useEffect } from "react";
+
+
 
 export default function App() {
 
-  const [fontsLoaded, fontError] = useFonts({
-    Josefin: require("./assets/JosefinSans-Regular.ttf"),
-  });
+  const {initDB} = useDB()
 
-  if (!fontsLoaded && !fontError) {
+/*   const [fontsLoaded, fontError] = useFonts({
+    Josefin: require("./assets/JosefinSans-Regular.ttf"),
+  }); */
+
+  useEffect(()=>{
+    initDB
+  })
+
+  /* if (!fontsLoaded && !fontError) {
     return null;
-  }
+  } */
 
   return (
     <SafeAreaView style={styles.container}>
