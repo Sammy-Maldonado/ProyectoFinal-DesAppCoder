@@ -49,3 +49,8 @@ Sammy Maldonado Prado - Todos los derechos reservados de "Churulandia" y ésta p
 
 ## 🚀 Sobre mí
 Soy Sammy Maldonado, Desarrollador Full Stack con formación en Ciberseguridad con 6 años de experiencia profesional en el sector científico, comercial y tecnológico, en el que he ejercido funciones de desarrollo y mantención de sitios y aplicaciones web, coordinado y liderado equipos técnicos para la atención y captación de clientes, destacando por mis habilidades en logística y administración, seguimiento estricto de protocolos de trabajo, orientación al logro de objetivos y trabajo con equipos multidisciplinarios. Actualmente tengo más de 2 años de experiencia en el área IT.
+
+## Deployment
+
+- https://proyectofinaldap-coder.netlify.app/
+
