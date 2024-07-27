@@ -1,12 +1,13 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
-
+import { LinearGradient } from "expo-linear-gradient";
 import { colors } from "../global/colors";
 
 //import products from "../data/products.json";
 import Search from "../components/Search";
 import ProductItem from "../components/ProductItem.jsx";
 import { useGetProductsByCategoryQuery } from "../services/shopServices.js";
+
 
 const ItemListCategory = ({ navigation, route }) => {
   const [keyWord, setKeyword] = useState("");
@@ -15,8 +16,7 @@ const ItemListCategory = ({ navigation, route }) => {
 
   const { category: categorySelected } = route.params;
 
-  const {data: productsFetched, error: errorFetched, isLoading} = useGetProductsByCategoryQuery(categorySelected);
-  console.log(productsFetched)
+  const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
   useEffect(() => {
     const regexDigits = /\d/;
     const hasDigits = regexDigits.test(keyWord);
@@ -33,52 +33,72 @@ const ItemListCategory = ({ navigation, route }) => {
       return;
     }
 
-    console.log(error);
+    //console.log(error);
 
-/*      const productsPreFiltered = products.filter(
-      (product) => product.category === categorySelected
-    );  
-    */
+    /*      const productsPreFiltered = products.filter(
+          (product) => product.category === categorySelected
+        );  
+        */
 
-    if(!isLoading){
-    const productsFiter = productsFetched.filter((product) =>
-      product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
-    );
-    //console.log(productsFiter);
-    setProductsFiltered(productsFiter);
-    setError("");
+    if (!isLoading) {
+      const productsFiter = productsFetched.filter((product) =>
+        product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
+      );
+      //console.log(productsFiter);
+      setProductsFiltered(productsFiter);
+      setError("");
     }
 
   }, [keyWord, categorySelected, productsFetched, isLoading]);
 
   return (
-    <View style={styles.flatListContainer}>
-      <Search
-        error={error}
-        onSearch={setKeyword}
-        goBack={() => navigation.goBack()}
-      />
-      <FlatList
-        data={productsFiltered}
-        renderItem={({ item }) => (
-          <ProductItem product={item} navigation={navigation} />
-        )}
-        keyExtractor={(producto) => producto.id}
-      />
-    </View>
+    <ImageBackground
+      source={require('../../assets/churu_salmon.jpg')}
+      style={styles.imageBackground}
+    >
+      <LinearGradient
+        colors={['rgba(255, 255, 255, 0.92)', 'rgba(255, 255, 255, 0.92)']}
+        style={styles.linearGradient}
+      >
+        <View style={styles.flatListContainer}>
+          <Search
+            error={error}
+            onSearch={setKeyword}
+            goBack={() => navigation.goBack()}
+          />
+          <FlatList
+            data={productsFiltered}
+            renderItem={({ item }) => (
+              <ProductItem product={item} navigation={navigation} />
+            )}
+            keyExtractor={(producto) => producto.id}
+          />
+        </View>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
 export default ItemListCategory;
 
 const styles = StyleSheet.create({
+  imageBackground: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  linearGradient: {
+    flex: 1,
+  },
   flatListContainer: {
     width: "100%",
-    backgroundColor: colors.green300,
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
   },
+  categoryFlatList: {
+    paddingVertical: 30,
+  }
 });

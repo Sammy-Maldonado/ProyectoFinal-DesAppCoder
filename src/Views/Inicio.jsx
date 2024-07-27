@@ -11,7 +11,7 @@ const Inicio = ({navigation}) => {
         medidas: {peso: 100, alto: 150}
     }
 
-    console.log(navigation)
+    //console.log(navigation)
     const visitarNosotros = () => {
         navigation.navigate('Nosotros', info)
     }

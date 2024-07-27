@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, ImageBackground } from 'react-native'
 import React, { useState } from 'react'
 import { colors } from '../global/colors'
 import * as ImagePicker from 'expo-image-picker';
@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCameraImage } from '../features/User/UserSlice';
 import { useGetProfileimageQuery, usePostProfileImageMutation } from '../services/shopServices';
 import AddButton from '../components/AddButton';
-const ImageSelector = ({navigation}) => {
+import { LinearGradient } from "expo-linear-gradient";
+
+
+const ImageSelector = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [isImageFromCamera, setIsImageFromCamera] = useState(false);
 
@@ -18,36 +21,38 @@ const ImageSelector = ({navigation}) => {
   //console.log(localId)
 
 
-      const pickLibraryImage = async () => {
-        try {
-            setIsImageFromCamera(false)
-            const permissionGallery = await verifyGalleryPermissions()
-            if (permissionGallery) {
-                const result = await ImagePicker.launchImageLibraryAsync({
-                    base64: true,
-                    allowsEditing: true,
-                    aspect: [1,1],
-                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                    quality: 0.2,
-                })
+  const defaultImageRoute = "../../assets/user.png";
 
-                console.log(result);
+  const pickLibraryImage = async () => {
+    try {
+      setIsImageFromCamera(false)
+      const permissionGallery = await verifyGalleryPermissions()
+      if (permissionGallery) {
+        const result = await ImagePicker.launchImageLibraryAsync({
+          base64: true,
+          allowsEditing: true,
+          aspect: [1, 1],
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 0.2,
+        })
 
-                if (!result.canceled){
-                    const image = `data:image/jpeg;base64,${result.assets[0].base64}`
-                    setImage(image)
-                }
-            }
-        } catch (error) {
-            console.log(error)
+        //console.log(result);
+
+        if (!result.canceled) {
+          const image = `data:image/jpeg;base64,${result.assets[0].base64}`
+          setImage(image)
         }
+      }
+    } catch (error) {
+      //console.log(error)
     }
+  }
 
-    const verifyGalleryPermissions = async () => {
-      const { granted } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      return granted;
-    };
+  const verifyGalleryPermissions = async () => {
+    const { granted } =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    return granted;
+  };
 
   const verifyCameraPermisson = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -82,54 +87,83 @@ const ImageSelector = ({navigation}) => {
       dispatch(setCameraImage(image));
       triggerPostImage({ image, localId });
       if (isImageFromCamera) {
+        navigation.navigate("My Profile");
         ExpoLibrary.createAssetAsync(imageURI);
+
       }
       navigation.goBack();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
   return (
-    <View style={styles.container}>
-      {image || imageFromBase ? (
-        <>
-          <Image
-            style={styles.img}
-            resizeMode="cover"
-            source={{ uri: image || imageFromBase?.image }}
-          />
-          <AddButton title="Take another photo" onPress={pickImage} />
+    <ImageBackground
+      source={require('../../assets/churu_salmon.jpg')}
+      style={styles.imageBackground}
+    >
+      <LinearGradient
+        colors={['rgba(255, 255, 255, 0.92)', 'rgba(255, 255, 255, 0.92)']}
+        style={styles.linearGradient}
+      >
+        <View style={styles.container}>
+          {image || imageFromBase ? (
+            <>
+              <Image
+                style={styles.img}
+                resizeMode="cover"
+                source={{ uri: image || imageFromBase?.image }}
+              />
+              <AddButton title="Tomar otra foto" onPress={pickImage} />
 
-          <AddButton
-            title="Pick photo from gallery"
-            onPress={pickLibraryImage}
-          />
+              <AddButton
+                title="Subir foto desde la galeria"
+                onPress={pickLibraryImage}
+              />
 
-          <AddButton title="Confirm photo" onPress={confirmImage} />
-        </>
-      ) : (
-        <>
-          <View style={styles.containerPhoto}>
-            <Text>No photo to show...</Text>
-          </View>
-          <AddButton title="Take a photo" onPress={pickImage} />
-          <AddButton
-            title="Pick photo from gallery"
-            onPress={pickLibraryImage}
-          />
-        </>
-      )}
-    </View>
+              <AddButton title="Confirmar Foto" onPress={confirmImage} />
+            </>
+          ) : (
+            <>
+              <Image
+                style={styles.img}
+                resizeMode="cover"
+                source={require(defaultImageRoute)}
+              />
+              <AddButton title="Tomar otra foto" onPress={pickImage} />
+              <AddButton
+                title="Subir foto desde la galeria"
+                onPress={pickLibraryImage}
+              />
+            </>
+          )}
+        </View>
+      </LinearGradient>
+    </ImageBackground>
   );
 }
 
 export default ImageSelector
 
 const styles = StyleSheet.create({
+  imageBackground: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  linearGradient: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 40,
+  },
+  img: {
+    height: 200,
+    width: 200,
+    borderRadius: 100,
+    marginBottom: 40
   },
   btn: {
     marginTop: 10,
@@ -139,20 +173,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 7,
     borderRadius: 5
-  },
-  img: {
-    marginVertical: 20,
-    height: 200,
-    width: 200,
-    borderRadius: 100
-  },
-  containerPhoto: {
-    marginVertical: 20,
-    height: 200,
-    width: 200,
-    borderRadius: 100,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
   }
 })

@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 18,
+    marginHorizontal: 20,
+    marginVertical: 30,
   },
   inputContainer: {
     flexDirection: "column",
@@ -54,13 +56,15 @@ const styles = StyleSheet.create({
     width: 250,
     padding: 8,
     fontSize: 18,
-    backgroundColor: colors.green700,
-    color: colors.gray100,
+    backgroundColor: colors.white0,
+    color: colors.black,
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'black',
   },
   errorText: {
     color: colors.white,
     fontSize: 16,
-    fontFamily: "Josefin",
+    fontFamily: "Cabin",
   },
 });

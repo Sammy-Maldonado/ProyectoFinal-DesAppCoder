@@ -26,7 +26,7 @@ const BottomTapNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Shop"
+        name="Churulandia"
         component={HomeStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => {
@@ -35,7 +35,7 @@ const BottomTapNavigator = () => {
                 <FontAwesome5
                   name="store"
                   size={24}
-                  color={focused ? "black" : colors.lightGray}
+                  color={focused ? "red" : colors.black}
                 />
               </View>
             );
@@ -43,7 +43,7 @@ const BottomTapNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Cart"
+        name="Carrito"
         component={CartStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => {
@@ -52,7 +52,7 @@ const BottomTapNavigator = () => {
                 <FontAwesome5
                   name="shopping-cart"
                   size={24}
-                  color={focused ? "black" : colors.lightGray}
+                  color={focused ? "red" : colors.black}
                 />
               </View>
             );
@@ -60,7 +60,7 @@ const BottomTapNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Order"
+        name="Ordenes"
         component={OrderStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => {
@@ -69,7 +69,7 @@ const BottomTapNavigator = () => {
                 <FontAwesome5
                   name="receipt"
                   size={24}
-                  color={focused ? "black" : colors.lightGray}
+                  color={focused ? "red" : colors.black}
                 />
               </View>
             );
@@ -77,7 +77,7 @@ const BottomTapNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="My Buttom Profile"
+        name="Mi perfil"
         component={MyProfileStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => {
@@ -86,7 +86,7 @@ const BottomTapNavigator = () => {
                 <FontAwesome5
                   name="user-alt"
                   size={24}
-                  color={focused ? "black" : colors.lightGray}
+                  color={focused ? "red" : colors.black}
                 />
               </View>
             );
@@ -101,7 +101,7 @@ export default BottomTapNavigator
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: colors.green700,
+    backgroundColor: colors.redFFCCCC,
     height: 60
   }
 })

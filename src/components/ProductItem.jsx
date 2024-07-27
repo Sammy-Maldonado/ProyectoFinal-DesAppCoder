@@ -40,11 +40,11 @@ export default ProductItem;
 const styles = StyleSheet.create({
   image: {
     height: 120,
-    width: "30%",
+    width: "45%",
     borderRadius: 8,
   },
   additionalStylesCard: {
-    height: 120,
+    height: 150,
     width: 300,
     margin: 10,
     paddingLeft: 10,
@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   textCategory: {
-    color: colors.green900,
-    width: '70%',
+    color: colors.black,
+    width: '55%',
+    fontSize: 18,
   },
   pressable : {
     width: "100%",

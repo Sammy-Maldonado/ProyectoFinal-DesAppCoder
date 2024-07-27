@@ -1,36 +1,45 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../global/colors";
+import { Button } from "native-base";
 
 const AddButton = ({
     title = "",
-    onPress = () => {},
-    color = colors.green700,
+    onPress = () => { },
+    color = colors.cyan00a2f9,
 }) => {
     return (
-        <Pressable
-            style={{ ...styles.button, backgroundColor: color }}
-            onPress={onPress}
-        >
-            <Text style={styles.text}>{title}</Text>
-        </Pressable>
+        <View style={styles.addButtonContainer}>
+            <Button style={{ ...styles.addButton, backgroundColor: color }}
+                onPress={onPress}
+            >
+                <Text style={styles.addButtonText}>{title}</Text>
+            </Button>
+        </View>
     );
 };
 
 export default AddButton;
 
 const styles = StyleSheet.create({
-    button: {
-        width: "80%",
-        borderWidth: 1,
-        backgroundColor: colors.green700,
+    addButtonContainer: {
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        padding: 8
     },
-    text: {
-        fontFamily: "Josefin",
-        fontSize: 18,
-        color: colors.green300,
+    addButton: {
+        height: 80,
+        width: 200,
+        borderRadius: 15,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: colors.cyan00a2f9,
+        marginBottom: 20,
+    },
+    addButtonText: {
+        fontSize: 22,
+        fontWeight: "bold",
+        color: colors.white,
+        textAlign: 'center'
     },
 });

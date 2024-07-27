@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: 70,
-    backgroundColor: colors.green900,
+    backgroundColor: colors.redFFCCCC,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   text: {
-    color: colors.green300,
-    fontSize: 22,
-    fontFamily: 'Josefin'
+    color: colors.red,
+    fontSize: 28,
+    fontFamily: 'CabinItalic'
   },
 });

@@ -3,7 +3,7 @@ import * as ExpoSQLite from "expo-sqlite";
 const db = ExpoSQLite.openDatabase("sessions.db");
 
 export const initSQLiteDB = () => {
-  console.log("Will create table");
+  //console.log("Will create table");
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //Define SQL statement. BEWARE of PARENTHESIS
@@ -15,7 +15,7 @@ export const initSQLiteDB = () => {
       );
     });
   });
-  console.log("will return promise");
+  //console.log("will return promise");
   return promise;
 };
 
@@ -50,7 +50,7 @@ export const getSession = () => {
 };
 
 export const dropSessionsTable = () => {
-  console.log("Will drop table");
+  //console.log("Will drop table");
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //Define SQL statement. BEWARE of PARENTHESIS
@@ -61,12 +61,12 @@ export const dropSessionsTable = () => {
       );
     });
   });
-  console.log("will return promise");
+  //console.log("will return promise");
   return promise;
 };
 
 export const truncateSessionsTable = () => {
-  console.log("Will truncate table");
+  //console.log("Will truncate table");
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //Define SQL statement. BEWARE of PARENTHESIS
@@ -78,6 +78,6 @@ export const truncateSessionsTable = () => {
       );
     });
   });
-  console.log("will return promise");
+  //console.log("will return promise");
   return promise;
 };

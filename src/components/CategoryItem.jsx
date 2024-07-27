@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from 'react-native'
+import { StyleSheet, Text, Pressable, Image } from 'react-native'
 
 
 import Card from './Card';
@@ -12,14 +12,15 @@ const CategoryItem = ({ category, navigation}) => {
   const dispatch = useDispatch()
 
   const handleNavigate = () => {
-    dispatch(setCategorySelected(category))
-    navigation.navigate("ItemListCategory", { category });
+    dispatch(setCategorySelected(category.name))
+    navigation.navigate("ItemListCategory", { category: category.name });
   }
 
   return (
     <Card style={styles.cardContainer}>
       <Pressable onPress={handleNavigate}>
-        <Text style={styles.text}>{category}</Text>
+        <Image style={styles.image} source={{ uri: category.imageUrl }}  />
+        <Text style={styles.text}>{category.name}</Text>
       </Pressable>
     </Card>
   );
@@ -30,11 +31,20 @@ export default CategoryItem
 const styles = StyleSheet.create({
     cardContainer: {
         marginHorizontal: 10, 
-        marginVertical: 10,
+        marginVertical: 20,
+        height: 180,
+        width: 200,
+        backgroundColor: colors.redFFCCCC,
+        borderRadius: 10,
     }, 
     text: {
         fontSize: 20,
         textAlign: 'center',
         color: colors.black
+    },
+    image: {
+        height: 120,
+        width: 200,
+        marginBottom: 5,
     }
 })

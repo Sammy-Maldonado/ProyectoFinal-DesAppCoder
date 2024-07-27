@@ -8,15 +8,24 @@ const OrderItem = ({ order }) => {
     0
   );
 
+  const formatDate = (isoString) => {
+    const [date, time] = isoString.split('T');
+    const [hours, minutes, seconds] = time.split('.')[0].split(':');
+    return `${date} - ${hours}:${minutes}:${seconds}`;
+  };
+
+  //Llamamos a la funcion para obtener la fecha formateada
+  const formattedDate = formatDate(order.createdAt);
+
   return (
     <View style={styles.card} onPress={() => {}}>
       <View style={styles.textContainer}>
         <Text style={styles.text}>
-          {new Date(order.createdAt).toLocaleString()}
+          {formattedDate}
         </Text>
         <Text style={styles.text2}>${total}</Text>
       </View>
-      <Feather name="search" size={30} color="black" />
+      <Feather name="search" size={30} color="black" paddingRight={25} />
     </View>
   );
 };
@@ -26,7 +35,7 @@ export default OrderItem;
 const styles = StyleSheet.create({
   card: {
     height: 100,
-    backgroundColor: colors.gray100,
+    backgroundColor: colors.redFFE5E5,
     padding: 10,
     margin: 10,
     borderWidth: 2,
@@ -40,15 +49,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    paddingLeft: 25,
   },
   text: {
-    fontFamily: "Josefin",
-    fontSize: 17,
+    fontFamily: "Cabin",
+    fontSize: 19,
     color: "black",
+    marginBottom: 10
   },
   text2: {
-    fontFamily: "Josefin",
-    fontSize: 19,
-    color: "gray",
+    fontFamily: "Cabin",
+    fontSize: 21,
+    color: colors.black,
+    fontWeight: "bold"
   },
 });

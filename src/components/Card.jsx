@@ -13,8 +13,8 @@ export default Card
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.lightGray,
-    shadowColor: colors.green900,
+    backgroundColor: colors.redFFCCCC,
+    shadowColor: colors.black,
     width: 250,
     height: 40,
     shadowOffset: {
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     marginRight: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 15,
   },
 });

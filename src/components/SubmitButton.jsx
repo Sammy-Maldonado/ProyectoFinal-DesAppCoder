@@ -14,16 +14,16 @@ export default SubmitButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.green700,
-    borderRadius: 6,
+    backgroundColor: colors.redFF2929,
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
-    width: "60%",
+    minWidth: 180,
   },
   text: {
-    color: colors.gray100,
-    fontFamily: "Josefin",
+    color: colors.white,
+    fontFamily: "Cabin",
     fontSize: 22,
   },
 });
